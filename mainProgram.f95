@@ -5,26 +5,29 @@ USE sub
 REAL :: time,dtmax
 INTEGER :: n,ntot,nout
 
-!CALL init
-CALL initB
+CALL init
+
+!CALL initB
 
 ! output of initial eta distribution
 OPEN(10,file ='eta0.dat',form='formatted')
   DO j = 1,ny
-    WRITE(10,'(101F12.6)')(eta(j,i),i=1,nx)
+    WRITE(10,'(1001F12.6)')(eta(j,i),i=1,nx)
   END DO
 CLOSE(10)
 
 ! output of initial layer thickness distribution
 OPEN(10,file ='h0.dat',form='formatted')
   DO j = 1,ny
-    WRITE(10,'(101F12.6)')(h0(j,i),i=1,nx)
+    WRITE(10,'(1001F12.6)')(h0(j,i),i=1,nx)
   END DO
 CLOSE(10)
 
 
-ntot = 5000
-nout = 5
+ntot = 15000
+nout = 40
+!ntot = 4000
+!nout = 40
 
 
 
@@ -38,12 +41,13 @@ DO n = 1,ntot
 
 time = REAL(n)*dt
 
-
+!tx = MIN(1., n*0.0001)
+!tx = 1.
 CALL fluid
 
 DO j = 1,ny
-  etan(j,0) = etan(j,nx)
-  etan(j,nx+1) = etan(j,1)
+  etan(j,0) = etan(j,nx+1)
+  etan(j,nx+1) = etan(j,0)
 END DO
 
 CALL filter
@@ -61,14 +65,14 @@ END DO
 ! write to file
 IF(MOD(n,nout)==0)THEN
   DO j = 1,ny
-    WRITE(10,'(101F12.6)')(eta(j,i),i=1,nx)
-    WRITE(20,'(101F12.6)')(h(j,i),i=1,nx)
-    WRITE(30,'(101F12.6)')(u(j,i),i=1,nx)
-    WRITE(40,'(101F12.6)')(v(j,i),i=1,nx)
+    WRITE(10,'(1001F12.6)')(eta(j,i),i=1,nx)
+    WRITE(20,'(1001F12.6)')(h(j,i),i=1,nx)
+    WRITE(30,'(1001F12.6)')(u(j,i),i=1,nx)
+    WRITE(40,'(1001F12.6)')(v(j,i),i=1,nx)
   END DO
   WRITE(6,*)"Data output at time = ",time
 ENDIF
 
-END DO 
+END DO
 
 END PROGRAM shalWater

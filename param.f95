@@ -1,20 +1,29 @@
 MODULE param
 
-INTEGER, PARAMETER :: nx = 100
-INTEGER, PARAMETER :: ny = 50
+INTEGER, PARAMETER :: nx = 501
+INTEGER, PARAMETER :: ny = 251
 
 REAL :: h0(0:ny+1,0:nx+1), h(0:ny+1,0:nx+1)
 REAL :: eta(0:ny+1,0:nx+1),etan(0:ny+1,0:nx+1)
 REAL :: u(0:ny+1,0:nx+1), un(0:ny+1,0:nx+1)
 REAL :: v(0:ny+1,0:nx+1), vn(0:ny+1,0:nx+1)
-REAL :: dt, dx, dy, g, ah, rho
-REAL :: tx, ty, eps
+!REAL :: dt, dx, dy, g, ah, rho
+!REAL :: tx, ty, eps, taux,tauy
+INTEGER :: mode
 
-INTEGER :: j,i
+REAL :: CuP(0:ny+1,0:nx+1), CuN(0:ny+1,0:nx+1)
+REAL :: CvP(0:ny+1,0:nx+1), CvN(0:ny+1,0:nx+1)
+REAL :: Cu(0:ny+1,0:nx+1), Cv(0:ny+1,0:nx+1)
+REAL :: B(0:ny+1,0:nx+1), BN(0:ny+1,0:nx+1)
+REAL :: T(0:ny+1,0:nx+1), TN(0:ny+1,0:nx+1)
+REAL :: dt, dx, dy, g, r, taux, tauy, rho, ah
+REAL :: slip
+
+
+INTEGER :: j,i,k
 
 INTEGER :: wet(0:ny+1,0:nx+1)
 REAL :: hmin
-
 
 
 END MODULE param
